@@ -1,13 +1,14 @@
+import { Image } from 'expo-image';
 import React, { useMemo } from 'react';
-import { View, Animated, LayoutChangeEvent } from 'react-native';
+import { Animated, LayoutChangeEvent, View } from 'react-native';
 import { StretchyProps } from '../types';
-import { AnimatedImageBackground } from './animatedImageBackground';
 import { stretchyImageStyles as styles } from './styles';
 
 export interface StretchyImageProps
   extends Omit<StretchyProps, 'backgroundColor' | 'foreground' | 'onScroll'> {
   animation: Animated.Value;
   imageHeight: number;
+  blurhash?: string;
   onLayout(event: LayoutChangeEvent): void;
 }
 
@@ -18,6 +19,7 @@ export const StretchyImage: React.FC<StretchyImageProps> = ({
   imageWrapperStyle,
   imageHeight,
   imageOverlay,
+  blurhash = '',
   onLayout,
 }) => {
   const transformStyles = useMemo(
@@ -44,12 +46,15 @@ export const StretchyImage: React.FC<StretchyImageProps> = ({
     <View
       style={[imageWrapperStyle, styles.wrapper, { height: imageHeight }]}
       onLayout={onLayout}>
-      <AnimatedImageBackground
-        source={image || {}}
+      <Image
+        source={image}
         resizeMode={imageResizeMode}
-        style={[styles.animatedImageBackground, transformStyles]}>
+        style={[styles.animatedImageBackground, transformStyles]}
+        placeholder={{
+          blurhash: blurhash,
+        }}>
         {Boolean(imageOverlay) && imageOverlay}
-      </AnimatedImageBackground>
+      </Image>
     </View>
   );
 };

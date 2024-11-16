@@ -44,7 +44,9 @@
     "url": "https://github.com/hamidhadi/react-native-stretchy/issues"
   },
   "homepage": "https://github.com/hamidhadi/react-native-stretchy#readme",
-  "dependencies": {},
+  "dependencies": {
+    "expo-image": "^2.0.0"
+  },
   "peerDependencies": {
     "react": "^16.11.0",
     "react-native": ">=0.60.0"
